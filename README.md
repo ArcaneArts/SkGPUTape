@@ -29,13 +29,13 @@ Start with a small explicit list of static clutter meshes in `Data/SKSE/Plugins/
 
 Implementation and exact build/install instructions follow as the prototype is developed.
 
-## Prototype 0.1.0
+## Prototype 0.1.1
 
 Implemented: Phase 1–2 plugin, successful PostLoadGame handling, manual list normalization/deduplication, timer-paced game-thread `BSModelDB::Demand`, strong model-root retention, cancellation and progress logging. **This version is loading-only: it does not yet render the models or demonstrate GPU warmup.** See [API research](docs/API_RESEARCH.md) for the verified bindings and proposed visible-render path.
 
 ### Install and test
 
-Import `SkGPUTape-0.1.0-win64.zip` from the Windows build artifact into your mod manager. Its `SKSE` folder belongs inside Skyrim's `Data` directory. Requires matching SKSE64 and Address Library for your SE/AE executable; VR is excluded. Edit `SKSE/Plugins/SkGPUTapeModels.txt`, launch via SKSE and load an existing save. The ten bundled clutter paths are starter candidates; check the log for availability in your installation. See [testing instructions](docs/TESTING.md) for log location and comparisons.
+Import `SkGPUTape-0.1.1-win64.zip` from the Windows build artifact into your mod manager. Its `SKSE` folder belongs inside Skyrim's `Data` directory. Requires matching SKSE64 and Address Library for your SE/AE executable; VR is excluded. Edit `SKSE/Plugins/SkGPUTapeModels.txt`, launch via SKSE and load an existing save. The ten bundled clutter paths are starter candidates; check the log for availability in your installation. See [testing instructions](docs/TESTING.md) for log location and comparisons.
 
 ### Build on Windows
 
@@ -60,3 +60,15 @@ ctest --test-dir build/tests --output-on-failure
 ```
 
 Configuration is re-read after each successful save load. Start with `ModelsPerBatch=1`; `BatchIntervalMs` spaces dispatches but cannot cap the duration of an individual engine call. `MaxModels=0` removes the list cap. `RetainModels=false` provides a loading-only retention comparison. All options in the shipped INI are implemented; automatic discovery and `WarmFrames` are deliberately deferred.
+
+### 0.1.1 runtime-loader correction
+
+A local patch to the pinned CommonLib revision classifies Skyrim 1.7.x as AE,
+selecting `versionlib-1-7-104-0.bin`, format 2, and AE relocation IDs. The previous
+build incorrectly classified 1.7 as legacy SE. Missing-file errors now include
+the requested path. Address Library files must keep their original filenames.
+
+Windows regression tests exercise 1.5.97, 1.6.1170, 1.7.99 and 1.7.104 with
+synthetic databases, plus a PE executable carrying a real 1.7.104 version resource.
+These test runtime detection and lookup, not Skyrim engine ABI compatibility or
+in-game model loading. Actual 1.7.104 execution remains to be validated in-game.

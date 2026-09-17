@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(SkGPUTape VERSION 0.1.0 LANGUAGES CXX)
+project(SkGPUTape VERSION 0.1.1 LANGUAGES CXX)
 option(SKGPUTAPE_CORE_TESTS_ONLY "Build portable discovery tests without Skyrim" OFF)
 if(SKGPUTAPE_CORE_TESTS_ONLY)
   enable_testing()
@@ -12,12 +12,23 @@ endif()
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(ENABLE_SKYRIM_VR OFF CACHE BOOL "" FORCE)
+find_package(Git REQUIRED)
 include(FetchContent)
 FetchContent_Declare(CommonLibSSE
   GIT_REPOSITORY https://github.com/CharmedBaryon/CommonLibSSE-NG.git
-  GIT_TAG b93280e832f263dbef44e44cbe2936622a02f91a)
+  GIT_TAG b93280e832f263dbef44e44cbe2936622a02f91a
+  PATCH_COMMAND "${GIT_EXECUTABLE}" apply --ignore-space-change --ignore-whitespace
+    "${CMAKE_CURRENT_SOURCE_DIR}/patches/commonlib-1.7-runtime.patch")
 FetchContent_MakeAvailable(CommonLibSSE)
 target_compile_options(CommonLibSSE PRIVATE /MP3)
+enable_testing()
+enable_language(RC)
+add_executable(runtime-tests tests/RuntimeTests.cpp tests/RuntimeVersion.rc)
+target_link_libraries(runtime-tests PRIVATE CommonLibSSE::CommonLibSSE)
+target_compile_definitions(runtime-tests PRIVATE ENABLE_COMMONLIBSSE_TESTING=1)
+target_precompile_headers(runtime-tests PRIVATE src/PCH.h)
+add_test(NAME runtime-address-library COMMAND runtime-tests)
+set_tests_properties(runtime-address-library PROPERTIES TIMEOUT 30)
 include(${commonlibsse_SOURCE_DIR}/cmake/CommonLibSSE.cmake)
 add_commonlibsse_plugin(SkGPUTape AUTHOR "ArcaneArts" VERSION ${PROJECT_VERSION}
   SOURCES src/main.cpp src/Config.cpp src/AssetDiscovery.cpp src/GPUWarmupManager.cpp)

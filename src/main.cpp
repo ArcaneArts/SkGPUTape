@@ -31,7 +31,7 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse) {
     spdlog::set_default_logger(std::move(logger));
     spdlog::set_pattern("[%Y-%m-%d %T.%e] [%l] %v");
     spdlog::flush_on(spdlog::level::info);
-    spdlog::info("SkGPUTape 0.1.0 initialized; runtime={}; mode=LoadOnly", REL::Module::get().version().string());
+    spdlog::info("SkGPUTape 0.1.1 initialized; runtime={}; mode=LoadOnly", REL::Module::get().version().string());
     if (!SKSE::GetMessagingInterface()->RegisterListener(OnMessage)) return false;
     tape::GPUWarmupManager::Get().Initialize();
     return true;

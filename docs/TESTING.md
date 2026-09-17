@@ -1,9 +1,9 @@
 # First in-game experiment
 
-This 0.1.0 build implements Phase 1 and Phase 2 only. It does not attach objects to a scene, issue draws, or guarantee GPU residency. Actual game validation is pending.
+This 0.1.1 build implements Phase 1 and Phase 2 only. It does not attach objects to a scene, issue draws, or guarantee GPU residency. Actual game validation is pending.
 
 1. Install SKSE64 matching your Skyrim executable and the matching SE/AE Address Library for SKSE Plugins. VR is excluded.
-2. Import `SkGPUTape-0.1.0-win64.zip` into MO2/Vortex. The archive root is Skyrim's Data directory: `SKSE/Plugins/SkGPUTape.dll`, INI and model list. No ESP is needed. Launch via SKSE.
+2. Import `SkGPUTape-0.1.1-win64.zip` into MO2/Vortex. The archive root is Skyrim's Data directory: `SKSE/Plugins/SkGPUTape.dll`, INI and model list. No ESP is needed. Launch via SKSE.
 3. Use a test save in a quiet interior. Load an existing save (new-game automatic loading is not implemented). Close menus to allow batches to run.
 4. Look for the start/completion notifications and `Documents/My Games/Skyrim Special Edition/SKSE/SkGPUTape.log` inside the CrossOver bottle's Windows user profile. GOG uses its corresponding game documents folder.
 5. Verify the initialized runtime line, successful PostLoadGame, list counts, individual Demand results, completion duration and retained-root count. Included paths are starter candidates, not verified against your installation. If a candidate is missing, replace it with a known installed static NIF; engine resolution handles loose/BSA content.

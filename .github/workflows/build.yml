@@ -19,6 +19,8 @@ jobs:
         run: cmake --build --preset release --parallel 3
       - name: Build Debug
         run: cmake --build --preset debug --parallel 3
+      - name: Test runtime address library
+        run: ctest --test-dir build/windows -C Release --output-on-failure
       - name: Test discovery
         run: |
           cmake -S . -B build/tests -DSKGPUTAPE_CORE_TESTS_ONLY=ON

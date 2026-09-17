@@ -51,3 +51,13 @@ The ten paths were cross-checked against the model fields in these Skyrim.esm ov
 - [Clutter\Bucket01.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Bucket01%20-%20012FDF_Skyrim.esm.yaml)
 - [Clutter\Kettle01.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Kettle01%20-%20012FE6_Skyrim.esm.yaml)
 - [Clutter\Kitchen\WoodenLadle01.nif](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/WoodenLadle01%20-%200319E5_Skyrim.esm.yaml)
+
+## 0.1.1 dependency patch
+
+`patches/commonlib-1.7-runtime.patch` adds minor version 7 alongside 6 in both
+`Module::load_version` and the test mock. This fixes selection of the AE database
+name, format and relocation-ID branch. The other `case 6` occurrences in `ID.h`
+are compression opcodes, not runtime checks; they are unchanged. The patch also
+reports the attempted path when opening the actual database fails. It does not
+add an existence precheck or bypass a failed database read. No engine struct
+layout changes are claimed or inferred from a successful library load.

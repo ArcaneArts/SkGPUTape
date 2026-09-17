@@ -1,0 +1,30 @@
+--- a/include/REL/Module.h
++++ b/include/REL/Module.h
+@@ -169,6 +169,7 @@
+ 						_instance._runtime = Runtime::VR;
+ 						break;
+ 					case 6:
++					case 7:  // Skyrim 1.7 uses AE address-library IDs and format.
+ 						_instance._runtime = Runtime::AE;
+ 						break;
+ 					default:
+@@ -340,6 +341,7 @@
+ 						_runtime = Runtime::VR;
+ 						break;
+ 					case 6:
++					case 7:  // Skyrim 1.7 uses AE address-library IDs and format.
+ 						_runtime = Runtime::AE;
+ 						break;
+ 					default:
+--- a/include/REL/ID.h
++++ b/include/REL/ID.h
+@@ -216,7 +216,8 @@
+                 _stream(a_filename.data(), a_mode)
+             {
+                 if (!_stream.is_open()) {
+-                    stl::report_and_fail("failed to open address library file");
++                    stl::report_and_fail(std::format("failed to open address library file: {}",
++                        stl::utf16_to_utf8(a_filename).value_or("<unknown filename>"s)));
+                 }
+ 
+                 _stream.exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
