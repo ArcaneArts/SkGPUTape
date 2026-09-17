@@ -36,3 +36,18 @@ Still unresolved: which menu owns and submits the preview on each runtime; culli
 Resource headers include `BSResource::Location`, `LocationTraverser`, `GlobalLocations`, `Archive` and `LooseFileLocation`. `Location::DoTraversePrefix(const char*, LocationTraverser&)` and `LocationTraverser::ProcessName(const char*, Location&)` are declared, but the exposed `GlobalLocations` class has no singleton getter. These declarations alone do not establish a safe entry point or complete loaded-BSA enumeration. Investigate traversal and archive name availability before selecting discovery implementation. Manual-list mode deliberately avoids inventing an archive enumerator.
 
 Skinned/controller-heavy assets and full shader-graph retention remain separate experiments. No direct DXVK hook, NIF parser or DDS parser is included.
+
+## Starter list provenance
+
+The ten paths were cross-checked against the model fields in these Skyrim.esm overrides in the Requiem source repository. This establishes concrete paths, not load success or render safety in the user's game. No game assets are distributed.
+
+- [Clutter\Dining Set\BasicTankard01.nif](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/BasicTankard01%20-%200319E3_Skyrim.esm.yaml)
+- [Clutter\Basket01.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Basket01%20-%20012FE7_Skyrim.esm.yaml)
+- [Clutter\Basket02.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Basket02%20-%20012FE8_Skyrim.esm.yaml)
+- [Clutter\Basket03.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Basket03%20-%20012FE9_Skyrim.esm.yaml)
+- [Clutter\Basket04.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Basket04%20-%20012FEA_Skyrim.esm.yaml)
+- [Clutter\Basket05.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Basket05%20-%20012FEB_Skyrim.esm.yaml)
+- [Clutter\Common\Broom.nif](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Broom01%20-%2006717F_Skyrim.esm.yaml)
+- [Clutter\Bucket01.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Bucket01%20-%20012FDF_Skyrim.esm.yaml)
+- [Clutter\Kettle01.NIF](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/Kettle01%20-%20012FE6_Skyrim.esm.yaml)
+- [Clutter\Kitchen\WoodenLadle01.nif](https://github.com/ProbablyManuel/requiem/blob/main/components/plugins/Requiem.esp/MiscItems/WoodenLadle01%20-%200319E5_Skyrim.esm.yaml)
