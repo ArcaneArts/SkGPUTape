@@ -17,6 +17,7 @@ FetchContent_Declare(CommonLibSSE
   GIT_REPOSITORY https://github.com/CharmedBaryon/CommonLibSSE-NG.git
   GIT_TAG b93280e832f263dbef44e44cbe2936622a02f91a)
 FetchContent_MakeAvailable(CommonLibSSE)
+target_compile_options(CommonLibSSE PRIVATE /MP3)
 include(${commonlibsse_SOURCE_DIR}/cmake/CommonLibSSE.cmake)
 add_commonlibsse_plugin(SkGPUTape AUTHOR "ArcaneArts" VERSION ${PROJECT_VERSION}
   SOURCES src/main.cpp src/Config.cpp src/AssetDiscovery.cpp src/GPUWarmupManager.cpp)
@@ -27,6 +28,12 @@ set_source_files_properties(src/Config.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON
 install(TARGETS SkGPUTape RUNTIME DESTINATION SKSE/Plugins COMPONENT SkGPUTape)
 install(FILES dist/SkGPUTape.ini dist/SkGPUTapeModels.txt DESTINATION SKSE/Plugins COMPONENT SkGPUTape)
 install(FILES README.md docs/TESTING.md docs/API_RESEARCH.md DESTINATION SkGPUTape COMPONENT SkGPUTape)
+install(FILES "${commonlibsse_SOURCE_DIR}/LICENSE"
+  DESTINATION SkGPUTape/licenses RENAME CommonLibSSE-NG.txt COMPONENT SkGPUTape)
+foreach(dependency IN ITEMS fmt spdlog rapidcsv)
+  install(FILES "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/${dependency}/copyright"
+    DESTINATION SkGPUTape/licenses RENAME ${dependency}.txt COMPONENT SkGPUTape)
+endforeach()
 set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PROJECT_NAME};SkGPUTape;/")
 set(CPACK_GENERATOR ZIP)
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
