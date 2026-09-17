@@ -1,0 +1,34 @@
+name: Windows build
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        shell: pwsh
+        run: |
+          $env:VCPKG_ROOT = $env:VCPKG_INSTALLATION_ROOT
+          cmake --preset windows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build Release
+        run: cmake --build --preset release --parallel 3
+      - name: Build Debug
+        run: cmake --build --preset debug --parallel 3
+      - name: Test discovery
+        run: |
+          cmake -S . -B build/tests -DSKGPUTAPE_CORE_TESTS_ONLY=ON
+          cmake --build build/tests --config Release
+          ctest --test-dir build/tests -C Release --output-on-failure
+      - name: Package
+        working-directory: build/windows
+        run: cpack -C Release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SkGPUTape-mod
+          path: build/windows/SkGPUTape-*-win64.zip
+          if-no-files-found: error

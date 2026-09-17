@@ -1,0 +1,13 @@
+# Starter candidates from vanilla static clutter. Engine failures are logged.
+# One NIF per line; paths may include meshes\ or Data\meshes\.
+# Replace/extend with known meshes from your installed mods. No inline comments.
+meshes\clutter\common\tankard01.nif
+meshes\clutter\common\plate01.nif
+meshes\clutter\common\bowl01.nif
+meshes\clutter\common\woodenplate01.nif
+meshes\clutter\common\woodenbowl01.nif
+meshes\clutter\common\woodenladle01.nif
+meshes\clutter\common\bucket01.nif
+meshes\clutter\common\basket01.nif
+meshes\clutter\common\broom01.nif
+meshes\clutter\common\kettle01.nif
