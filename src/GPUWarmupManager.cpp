@@ -57,7 +57,7 @@ void GPUWarmupManager::Start() {
 }
 void GPUWarmupManager::ProcessBatch() {
     // Menus can pause gameplay; don't initiate expensive demands during them.
-    if (const auto* ui = RE::UI::GetSingleton(); ui && ui->GameIsPaused()) return;
+    if (auto* ui = RE::UI::GetSingleton(); ui && ui->GameIsPaused()) return;
     ++batch;
     const auto end = std::min(queue.size(), cursor + config.modelsPerBatch);
     spdlog::info("Batch {}: models {}..{} / {}", batch, cursor + 1, end, queue.size());
